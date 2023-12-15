@@ -94,10 +94,10 @@ class Chunk:
 
 
 class Menu:
-    '''
+    """
 
     класс меню - магазина, взаимодействуя с которым можно строить здания
-    '''
+    """
     def __init__(self, m_x=res[0]/2 - 330, m_y=res[1]/2 - 450):
         self.x, self.y = m_x, m_y
         self.flag = False
@@ -109,13 +109,14 @@ class Menu:
         self.flag = False
 
     def build(self):
-        '''
+        """
         функция класса меню, которая вызывается при нажатии на меню
         в зависимости от состояния tale, balance либо строит здание либо уведомляет об ошибкке
-        '''
+        """
         enough_money = False
         closed_flag = True
         just_bulding = None
+        cond = self.chosen_point > 3
         global money, just_menu_chunck, new_textures
         for b in buldings:
             if just_menu_chunck in b:
@@ -132,7 +133,7 @@ class Menu:
                 global std_massive
                 new_textures = building_textures_std[self.chosen_point - 1 - 2 * int(self.chosen_point > 3)]
                 std_massive[self.chosen_point] = True
-                std_mas[self.chosen_point - 1 - 2 * int(self.chosen_point > 3)] = 1
+                std_mas[self.chosen_point - 1 - 2 * int(cond)] = 1
                 Learn.built += 1
 
                 money -= cost[0][self.chosen_point - 1]
@@ -165,7 +166,7 @@ class Menu:
                 global food_massive
                 new_textures = building_textures_food[self.chosen_point - 1 - 3 * int(self.chosen_point > 3)]
                 food_massive[self.chosen_point] = True
-                food_mas[self.chosen_point - 1 - 3 * int(self.chosen_point > 3)] = 1
+                food_mas[self.chosen_point - 1 - 3 * int(cond)] = 1
                 Foodc.built += 1
 
                 money -= cost[3][self.chosen_point - 1]
@@ -182,9 +183,9 @@ class Menu:
             messagebox.showinfo('CAMPSIM', 'Место уже занято')
 
     def open_menu(self):
-        '''
+        """
         функция вызова меню. в зависимости от типа tale вызывает разное меню
-        '''
+        """
         self.flag = True
         if 'std' in chuncks_types[mouse_on_chunk_number]:
             self.type = 'std'
@@ -196,9 +197,9 @@ class Menu:
             self.type = 'hs_right'
 
     def render(self):
-        '''
+        """
         функция отрисовки меню на экране
-        '''
+        """
         if self.flag is True:
             if self.type == 'std':
                 screen.blit(textures['std'], (self.x, self.y))
@@ -214,9 +215,9 @@ class Menu:
                 window.blit(pygame.transform.scale(screen, res), (0, 0))
 
     def __point_detect(self):
-        '''
+        """
         функция, определяюща положение мыши при нажатии на меню
-        '''
+        """
         global chosen_x, chosen_y
         if chosen_x in range(470, 738):
             if chosen_y in range(155, 205):
@@ -242,9 +243,9 @@ class Menu:
                 self.chosen_point = 10
 
     def processing_click(self):
-        '''
+        """
         функция обработки нажатия на меню
-        '''
+        """
         self.__point_detect()
         if self.type == 'std':
             if self.chosen_point in std_massive:
@@ -277,9 +278,9 @@ class Menu:
 
 
 class ProjectMenu:
-    '''
+    """
     класс меню с итоговыми проектами
-    '''
+    """
     def __init__(self, m_x=res[0]/2 - 330, m_y=res[1]/2 - 450):
         self.x = m_x
         self.y = m_y
@@ -298,9 +299,9 @@ class ProjectMenu:
             self.type = 'not ready'
 
     def render(self):
-        '''
+        """
         функция прорисовки итогового меню
-        '''
+        """
         screen.blit(text_0, (res[0] - 300, res[1] - 180))
         window.blit(pygame.transform.scale(screen, res), (0, 0))
         if self.flag is True:
@@ -358,9 +359,9 @@ class ProjectMenu:
 
 
 class Building:
-    '''
+    """
     класс зданий
-    '''
+    """
     def __init__(self):
         self.income = 0
         self.outcome = 0
